@@ -1,6 +1,6 @@
 import { OneEuroFilter } from "./one_euro_filter";
 
-class Vector3Filter {
+export class Vector3Filter {
     private xFilter: OneEuroFilter;
     private yFilter: OneEuroFilter;
     private zFilter: OneEuroFilter;
