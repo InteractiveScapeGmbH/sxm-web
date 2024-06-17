@@ -1,4 +1,4 @@
-import mqtt, { IClientPublishOptions } from "mqtt";
+import mqtt from "mqtt";
 
 interface Message {
     topic: string,
