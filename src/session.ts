@@ -138,6 +138,6 @@ export class SxmSession {
 
     private sendStatus(): void {
         const status = this.device.getStatus;
-        this.client.send(`${this.roomId}/box`, status, QoS.One, false);
+        this.client.send(`sxm/${this.roomId}/box`, status, QoS.One, false);
     }
 }
