@@ -40,6 +40,10 @@ class Device {
         this.init();
     }
 
+    public registerMotionCallback(callback: Callback) {
+        this.onMotionChangedCallbacks.push(callback);
+    }
+
     private async init() {
         await this.requestMotion();
         await this.requestOrientation();
@@ -59,10 +63,6 @@ class Device {
             this.triggerCallbacks();
         }
 
-    }
-
-    public registerMotionCallback(callback: Callback) {
-        this.onMotionChangedCallbacks.push(callback);
     }
 
     private triggerCallbacks() {
