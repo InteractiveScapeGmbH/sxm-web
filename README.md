@@ -25,6 +25,9 @@ You can register four callbacks on the `SxmSession` object:
 - `onDown`: is called when the device is placed on the touch table.
 - `onUp`: is called when the device is lifted from the touch table.
 
+### Example project
+We provide a simple [web-app](https://interactivescapegmbh.github.io/) as a starting point. ([source](https://github.com/InteractiveScapeGmbH/InteractiveScapeGmbH.github.io)).
+
 ## How does it work?
 First the `sxm-web` package creates an unique id (`uuidv4`) for your device. It uses the gyroscope of your smartphone to get informationen about whether your phone is moving or not and if your phone is horizontal or tilted. It establishes a connection to a MQTT broker and together with the unique id it sends the motion information to this server.
 
