@@ -38,7 +38,9 @@ export class MqttClient {
             clientId: clientId,
             username: username,
             password: password,
-            manualConnect: true
+            manualConnect: true,
+            protocol: "wss",
+            path: "/mqtt/"
         };
         this.client = mqtt.connect(this.clientOptions);
         this.client.on("connect", (connack) => this.onConnect(connack));
