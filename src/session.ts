@@ -6,7 +6,6 @@ const deviceIdKey: string = "device_uuid";
 const defaultBrokerUrl: string = "broker.hivemq.com";
 const defaultBrokerPort: number = 8884;
 const defaultRoomId: string = "room_uuid";
-const heartbeatIntervalMilliseconds: number = 200;
 
 type Callback = (message: string | Buffer) => void;
 
@@ -24,12 +23,18 @@ export class SxmSession {
     private downCallback: Callback | null;
     private upCallback: Callback | null;
 
-    constructor(roomId: string) {
+
+    /**
+     * 
+     * The Session is responsible for the communication with the MQTT broker.
+     * 
+     */
+    constructor() {
         this.uuid = this.initDeviceId();
 
         this.brokerUrl = defaultBrokerUrl;
         this.brokerPort = defaultBrokerPort;
-        this.roomId = (!!roomId) ? roomId : defaultRoomId;
+        this.roomId = defaultRoomId;
 
         this.getParameterFromUrl();
 
@@ -45,30 +50,55 @@ export class SxmSession {
         this.subscribeTopics();
     }
 
-    public start() {
-        this.statusIntervalId = window.setInterval(() => this.sendStatus(), heartbeatIntervalMilliseconds);
+    /**
+     * 
+     * Starts the communication with the MQTT broker.
+     * 
+     * @param interval - The interval in ms in which a message is sent to the server. (Default: 200ms)
+     */
+    public start(interval: number = 200) {
+        this.statusIntervalId = window.setInterval(() => this.sendStatus(), interval);
     }
 
+    /**
+     * Stops the communication with the MQTT broker.
+     */
     public stop() {
         clearInterval(this.statusIntervalId);
     }
 
+    /**
+     * Sets a callback method which gets invoked when the touch table is connected to the MQTT server.
+     */
     public set onStart(callback: Callback) {
         this.startCallback = callback;
     }
 
+    /**
+    * Sets a callback method which gets invoked when the touch table is disconnected from the MQTT server.
+    */
     public set onShutdown(callback: Callback) {
         this.shutdownCallback = callback;
     }
 
+    /**
+    * Sets a callback method which gets invoked when the phone is placed on the touch table.
+    */
     public set onDown(callback: Callback) {
         this.downCallback = callback;
     }
 
+    /**
+    * Sets a callback method which gets invoked when the phone is lifted from the touch table.
+    */
     public set onUp(callback: Callback) {
         this.upCallback = callback;
     }
 
+
+    /**
+     * Returns the roomId of the touch table the session is trying to communicate with.
+     */
     public get roomId(): string {
         return this._roomId;
     }
@@ -78,6 +108,10 @@ export class SxmSession {
         console.log(`Set RoomId -> ${roomId}`);
     }
 
+
+    /**
+     * Returns the url of the broker this client is connected to.
+     */
     public get brokerUrl(): string {
         return this._brokerUrl;
     }
@@ -87,6 +121,9 @@ export class SxmSession {
         console.log(`Set broker url -> ${url}`);
     }
 
+    /**
+     * Returns the port of the broker this client is connected to. 
+     */
     public get brokerPort(): number {
         return this._brokerPort;
     }
