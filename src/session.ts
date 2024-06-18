@@ -2,10 +2,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { MqttClient, QoS } from './mqtt_client';
 import { Device } from './device';
 
-const deviceIdKey: string = "device_uuid";
-const defaultBrokerUrl: string = "broker.hivemq.com";
-const defaultBrokerPort: number = 8884;
-const defaultRoomId: string = "room_uuid";
+const DEVICE_ID_KEY: string = "device_uuid";
+const DEFAULT_BROKER_URL: string = "broker.hivemq.com";
+const DEFAULT_BROKER_PORT: number = 8884;
+const DEFAULT_ROOM_ID: string = "room_uuid";
 
 type Callback = (message: string | Buffer) => void;
 
@@ -31,9 +31,9 @@ export class SxmSession {
     constructor() {
         this.uuid = this.initDeviceId();
 
-        this.brokerUrl = defaultBrokerUrl;
-        this.brokerPort = defaultBrokerPort;
-        this.roomId = defaultRoomId;
+        this.brokerUrl = DEFAULT_BROKER_URL;
+        this.brokerPort = DEFAULT_BROKER_PORT;
+        this.roomId = DEFAULT_ROOM_ID;
 
         this.getParameterFromUrl();
 
@@ -138,10 +138,10 @@ export class SxmSession {
     }
 
     private initDeviceId(): string {
-        let deviceId = localStorage.getItem(deviceIdKey);
+        let deviceId = localStorage.getItem(DEVICE_ID_KEY);
         if (deviceId === null) {
             deviceId = uuidv4();
-            localStorage.setItem(deviceIdKey, deviceId);
+            localStorage.setItem(DEVICE_ID_KEY, deviceId);
         }
         return deviceId;
     }
@@ -190,7 +190,7 @@ export class SxmSession {
                 case "r":
                     this.roomId = decodeURIComponent(value);
                     break;
-                case deviceIdKey:
+                case DEVICE_ID_KEY:
                     this.uuid = decodeURIComponent(value);
                     break;
             }
