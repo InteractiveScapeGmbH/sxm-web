@@ -8,7 +8,7 @@ const defaultBrokerPort: number = 8884;
 const defaultRoomId: string = "room_uuid";
 const heartbeatIntervalMilliseconds: number = 200;
 
-type Callback = (message: string | Buffer | undefined) => void;
+type Callback = (message: string | Buffer) => void;
 
 export class SxmSession {
     private uuid: string | null;
@@ -86,25 +86,25 @@ export class SxmSession {
     }
 
     private _onStart(message: string | Buffer | undefined): void {
-        if (this.startCallback != null) {
+        if (this.startCallback != null && message != null) {
             this.startCallback(message);
         }
     }
 
     private _onShutdown(message: string | Buffer | undefined): void {
-        if (this.shutdownCallback != null) {
+        if (this.shutdownCallback != null && message != null) {
             this.shutdownCallback(message);
         }
     }
 
     private _onDown(message: string | Buffer | undefined): void {
-        if (this.downCallback != null) {
+        if (this.downCallback != null && message != null) {
             this.downCallback(message);
         }
     }
 
     private _onUp(message: string | Buffer | undefined): void {
-        if (this.upCallback != null) {
+        if (this.upCallback != null && message != null) {
             this.upCallback(message);
         }
     }
