@@ -40,6 +40,14 @@ class Device {
         this.init();
     }
 
+    public get isMoving(): boolean {
+        return this.currentMoving;
+    }
+
+    public get isTilted(): boolean {
+        return this.currentTilted;
+    }
+
     public registerOnMotionChanged(callback: Callback) {
         this.onMotionChangedCallbacks.push(callback);
     }
@@ -56,8 +64,8 @@ class Device {
         this.currentMoving = false;
         this.currentTilted = false;
 
-        this.currentTilted = this.isTilted(5.0);
-        this.currentMoving = this.isMoving(1.0, 2.0);
+        this.currentTilted = this._isTilted(5.0);
+        this.currentMoving = this._isMoving(1.0, 2.0);
 
         if ((!this.currentTilted && this.currentMoving !== this.lastMoving) || (!this.currentMoving && this.currentTilted !== this.lastTilted)) {
             this.triggerCallbacks();
@@ -69,7 +77,7 @@ class Device {
         this.onMotionChangedCallbacks.forEach(callback => callback());
     }
 
-    private isMoving(accelerationThreshold: number, rotationThreshold: number): boolean {
+    private _isMoving(accelerationThreshold: number, rotationThreshold: number): boolean {
         if (this.acceleration == null || this.rotationRate == null) return false;
         const { x = 0, y = 0, z = 0 } = this.acceleration;
         const maxAcceleration = Math.max(Math.abs(x ?? 0), Math.abs(y ?? 0), Math.abs(z ?? 0));
@@ -80,7 +88,7 @@ class Device {
         return maxAcceleration > accelerationThreshold || maxRotation > rotationThreshold;
     }
 
-    private isTilted(angleThreshold: number): boolean {
+    private _isTilted(angleThreshold: number): boolean {
         return Math.max(Math.abs(this.beta), Math.abs(this.gamma)) > angleThreshold;
     }
 
