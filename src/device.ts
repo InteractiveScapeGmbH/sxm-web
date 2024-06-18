@@ -40,7 +40,7 @@ class Device {
         this.init();
     }
 
-    public registerMotionCallback(callback: Callback) {
+    public registerOnMotionChanged(callback: Callback) {
         this.onMotionChangedCallbacks.push(callback);
     }
 
