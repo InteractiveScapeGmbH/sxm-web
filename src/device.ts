@@ -6,7 +6,14 @@ interface DeviceMotionEventExtended extends DeviceMotionEvent {
     requestPermission?: () => Promise<"granted" | "denied">;
 }
 
+interface DeviceStatus {
+    device_id: string,
+    device_movement: string,
+    device_tilt: string
+}
+
 type Callback = () => void;
+
 
 class Device {
 
@@ -21,9 +28,10 @@ class Device {
     private lastTilted: boolean;
     private currentTilted: boolean;
     private onMotionChangedCallbacks: Callback[];
+    private status: DeviceStatus;
 
 
-    constructor() {
+    constructor(deviceId: string) {
 
         this.joined = false;
         this.alpha = 0.0;
@@ -37,6 +45,8 @@ class Device {
 
         this.onMotionChangedCallbacks = [];
 
+        this.status = { device_id: deviceId, device_movement: "moving", device_tilt: "tilted" };
+
         this.init();
     }
 
@@ -46,6 +56,15 @@ class Device {
 
     public get isTilted(): boolean {
         return this.currentTilted;
+    }
+
+    private updateStatus() {
+        this.status.device_movement = this.isMoving ? "moving" : "stationary";
+        this.status.device_tilt = this.isTilted ? "tilted" : "horizontal";
+    }
+
+    public get getStatus(): string {
+        return JSON.stringify(this.status);
     }
 
     public registerOnMotionChanged(callback: Callback) {
@@ -71,6 +90,7 @@ class Device {
             this.triggerCallbacks();
         }
 
+        this.updateStatus();
     }
 
     private triggerCallbacks() {
