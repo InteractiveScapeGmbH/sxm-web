@@ -49,6 +49,15 @@ export class MqttClient {
         this.client.connect();
     }
 
+    /**
+     * 
+     * Sends a message for a given topic to the MQTT broker.
+     * 
+     * @param topic - The topic the message should be sent to.
+     * @param message - The message itself.
+     * @param qos - The quality of service level of this request.
+     * @param retained - Defines if the broker should store the message.
+     */
     public send(topic: string, message: string | Buffer, qos: QoS, retained: boolean = false) {
         if (this.isOpen) {
             this.client.publish("sxm/" + topic, message, { qos: qos, retain: retained });
@@ -63,6 +72,13 @@ export class MqttClient {
         }
     }
 
+    /**
+     * 
+     * Subsribes to a MQTT topic.
+     * 
+     * @param topic - Topic you want to subscribe to.
+     * @param onMessageCallback - Callback method which gets invoked when a message for this topic arrives.
+     */
     public subscribe(topic: string, onMessageCallback: Callback) {
         if (this.isOpen) {
             const options: IClientSubscribeOptions = { qos: QoS.One };
