@@ -40,7 +40,7 @@ export class MqttClient {
             password: password,
             manualConnect: true,
             protocol: "wss",
-            path: "/mqtt/"
+            path: "/mqtt"
         };
         this.client = mqtt.connect(this.clientOptions);
         this.client.on("connect", (connack) => this.onConnect(connack));
@@ -86,7 +86,7 @@ export class MqttClient {
     }
 
     private onConnect(connack: mqtt.IConnackPacket): void {
-        console.log("MQTT Client connected.");
+        console.log(`MQTT Client connected to ${this.clientOptions.host}:${this.clientOptions.port}`);
         this.triggerCallbacks(this.onConnectedCallbacks);
         this.isOpen = true;
         this.messageQueue.forEach(message => {
