@@ -29,6 +29,13 @@ You can register four callbacks on the `SxmSession` object:
 We provide a simple [web-app](https://interactivescapegmbh.github.io/) as a starting point. ([source](https://github.com/InteractiveScapeGmbH/InteractiveScapeGmbH.github.io)).
 
 ## How does it work?
+
+### Scape X Mobile Ecosystem
+
+![](documentation/overview.png)
+
+### sxm-web
+
 First the `sxm-web` package creates an unique id (`uuidv4`) for your device. It uses the gyroscope of your smartphone to get informationen about whether your phone is moving or not and if your phone is horizontal or tilted. It establishes a connection to a MQTT broker and together with the unique id it sends the motion information to this server.
 
 The Scape X Mobile enabled touch table is capable of detecting smartphones. But without information from the web app it is not possible to assign unique ids to each smartphone. So by default every detected phone on the table gets an ID of `-1`. 
