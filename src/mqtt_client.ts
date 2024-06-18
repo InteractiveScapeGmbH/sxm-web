@@ -9,7 +9,7 @@ interface Message {
 
 type Callback = (payload?: string | Buffer) => void;
 
-enum QoS {
+export enum QoS {
     Zero = 0,
     One = 1,
     Two = 2,
