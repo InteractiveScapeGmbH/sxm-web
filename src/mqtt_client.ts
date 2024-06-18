@@ -7,12 +7,14 @@ interface Message {
     retained: boolean,
 }
 
-class MqttClient {
+type Callback = () => void;
+
+export class MqttClient {
 
     private clientOptions: mqtt.IClientOptions;
     private client: mqtt.MqttClient;
     private isOpen: boolean;
-    private onConnectedCallbacks: Function[];
+    private onConnectedCallbacks: Callback[];
     private onMessageDict: Record<string, Buffer>;
     private messageQueue: Message[];
 
@@ -52,13 +54,17 @@ class MqttClient {
         }
     }
 
+    public subscribe(topic: string, onMessageCallback: Callback) {
+
+    }
+
     private onConnect(connack: mqtt.IConnackPacket): void {
         console.log("MQTT Client connected.");
         this.triggerCallbacks(this.onConnectedCallbacks);
         this.isOpen = true;
 
     }
-    private triggerCallbacks(callbacks: Function[]) {
+    private triggerCallbacks(callbacks: Callback[]) {
         callbacks.forEach(callback => callback());
     }
     private onMessageArrived(topic: string, message: Buffer, packet: mqtt.IPublishPacket): void {

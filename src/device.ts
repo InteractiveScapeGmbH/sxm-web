@@ -6,6 +6,8 @@ interface DeviceMotionEventExtended extends DeviceMotionEvent {
     requestPermission?: () => Promise<"granted" | "denied">;
 }
 
+type Callback = () => void;
+
 class Device {
 
     private joined: boolean;
@@ -18,7 +20,7 @@ class Device {
     private currentMoving: boolean;
     private lastTilted: boolean;
     private currentTilted: boolean;
-    private onMotionChangedCallbacks: Function[];
+    private onMotionChangedCallbacks: Callback[];
 
 
     constructor() {
@@ -59,7 +61,7 @@ class Device {
 
     }
 
-    public registerMotionCallback(callback: Function) {
+    public registerMotionCallback(callback: Callback) {
         this.onMotionChangedCallbacks.push(callback);
     }
 
