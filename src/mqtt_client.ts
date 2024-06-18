@@ -25,7 +25,6 @@ export class MqttClient {
     private onMessageDict: Map<string, Callback>;
     private messageQueue: Message[];
 
-
     /**
      * 
      * An easy to use MQTT client which connects to a MQTT broker over a secured websocket connection.

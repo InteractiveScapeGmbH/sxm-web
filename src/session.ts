@@ -23,7 +23,6 @@ export class SxmSession {
     private downCallback: Callback | null;
     private upCallback: Callback | null;
 
-
     /**
      * 
      * The Session is responsible for the communication with the MQTT broker.
@@ -95,7 +94,6 @@ export class SxmSession {
         this.upCallback = callback;
     }
 
-
     /**
      * Returns the roomId of the touch table the session is trying to communicate with.
      */
@@ -107,7 +105,6 @@ export class SxmSession {
         this._roomId = roomId;
         console.log(`Set RoomId -> ${roomId}`);
     }
-
 
     /**
      * Returns the url of the broker this client is connected to.
