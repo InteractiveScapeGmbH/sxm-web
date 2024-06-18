@@ -24,19 +24,17 @@ export class MqttClient {
     private onDisconnectedCallbacks: Callback[];
     private onMessageDict: Map<string, Callback>;
     private messageQueue: Message[];
-    private subscriptionQueue: Callback[];
 
-    constructor(brokerUrl: string, clientId: string, username: string = "", password: string = "") {
+    constructor(brokerUrl: string, port: number, clientId: string, username?: string, password?: string) {
         this.onConnectedCallbacks = [];
         this.onDisconnectedCallbacks = [];
         this.onMessageDict = new Map<string, Callback>();
         this.messageQueue = [];
-        this.subscriptionQueue = [];
 
         this.isOpen = false;
         this.clientOptions = {
             host: brokerUrl,
-            port: 8884,
+            port: port,
             clientId: clientId,
             username: username,
             password: password,
