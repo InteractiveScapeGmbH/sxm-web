@@ -1,8 +1,24 @@
 {
   "name": "sxm-web",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "homepage": "https://github.com/InteractiveScapeGmbH/sxm-web",
+  "description": "This package provides the functionality to establish the communication between a web app and an Interactive Scape touch table with Scape X Mobile.",
+  "keywords": [
+    "mqtt",
+    "scape x mobile",
+    "mobile"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/InteractiveScapeGmbH/sxm-web/issues",
+    "email": "querner@interactive-scape.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/InteractiveScapeGmbH/sxm-web.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
