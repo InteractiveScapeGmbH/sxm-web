@@ -25,6 +25,18 @@ export class MqttClient {
     private onMessageDict: Map<string, Callback>;
     private messageQueue: Message[];
 
+
+    /**
+     * 
+     * An easy to use MQTT client which connects to a MQTT broker over a secured websocket connection.
+     * It is a simple abstraction layer around the internally uses MQTT.js library.
+     * 
+     * @param brokerUrl - The URL of the server to which this client should connect to.
+     * @param port  - The port of the MQTT broker.
+     * @param clientId  - A unique ID of the client which gets used to distinguish different client on the broker side.
+     * @param username - Optional: For authentication on the server.
+     * @param password - Optional: For authentication on the server.
+     */
     constructor(brokerUrl: string, port: number, clientId: string, username?: string, password?: string) {
         this.onConnectedCallbacks = [];
         this.onDisconnectedCallbacks = [];
@@ -60,7 +72,7 @@ export class MqttClient {
      */
     public send(topic: string, message: string | Buffer, qos: QoS, retained: boolean = false) {
         if (this.isOpen) {
-            this.client.publish("sxm/" + topic, message, { qos: qos, retain: retained });
+            this.client.publish(topic, message, { qos: qos, retain: retained });
         } else {
             const msg: Message = {
                 topic: topic,
@@ -93,10 +105,22 @@ export class MqttClient {
         }
     }
 
+    /**
+     * 
+     * Registers a callback which gets invoked when the client is connected from the server.
+     * 
+     * @param callback - The callback method which gets invoked when connected.
+     */
     public registerOnConnected(callback: Callback) {
         this.onConnectedCallbacks.push(callback);
     }
 
+    /**
+     * 
+     * Registers a callback whichg gets invoked when the client is disconnected from the server.
+     * 
+     * @param callback - The callback method which gets invoked when disconnected.
+     */
     public registerOnDisconnected(callback: Callback) {
         this.onDisconnectedCallbacks.push(callback);
     }
