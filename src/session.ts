@@ -14,9 +14,9 @@ export class SxmSession {
     private uuid: string | null;
     private device: Device;
     private client: MqttClient;
-    private brokerUrl: string;
-    private brokerPort: number;
-    private roomId: string;
+    private _brokerUrl: string = "";
+    private _brokerPort: number = -1;
+    private _roomId: string = "";
     private statusIntervalId: number | undefined;
 
     private startCallback: Callback | null;
@@ -67,6 +67,33 @@ export class SxmSession {
 
     public set onUp(callback: Callback) {
         this.upCallback = callback;
+    }
+
+    public get roomId(): string {
+        return this._roomId;
+    }
+
+    private set roomId(roomId: string) {
+        this._roomId = roomId;
+        console.log(`Set RoomId -> ${roomId}`);
+    }
+
+    public get brokerUrl(): string {
+        return this._brokerUrl;
+    }
+
+    private set brokerUrl(url: string) {
+        this._brokerUrl = url;
+        console.log(`Set broker url -> ${url}`);
+    }
+
+    public get brokerPort(): number {
+        return this._brokerPort;
+    }
+
+    private set brokerPort(port: number) {
+        this._brokerPort = port;
+        console.log(`Set broker port -> ${port}`);
     }
 
     private subscribeTopics() {
