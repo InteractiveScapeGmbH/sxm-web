@@ -15,14 +15,16 @@ export class MqttClient {
     private client: mqtt.MqttClient;
     private isOpen: boolean;
     private onConnectedCallbacks: Callback[];
-    private onMessageDict: Record<string, Buffer>;
+    private onMessageDict: Record<string, Callback>;
     private messageQueue: Message[];
+    private subscriptionQueue: Callback[];
 
 
     constructor(brokerUrl: string, clientId: string, username: string = "", password: string = "") {
         this.onConnectedCallbacks = [];
         this.onMessageDict = {};
         this.messageQueue = [];
+        this.subscriptionQueue = [];
 
         this.isOpen = false;
         this.clientOptions = {
@@ -55,7 +57,16 @@ export class MqttClient {
     }
 
     public subscribe(topic: string, onMessageCallback: Callback) {
-
+        if (this.isOpen) {
+            this.client.subscribe(topic, (error) => {
+                if (error) {
+                    console.log(`Could not subscribe to topic: ${topic} -> ${error.message}`);
+                } else {
+                    this.onMessageDict[topic] = onMessageCallback;
+                    console.log(`Subscribed to topic: ${topic}`);
+                }
+            })
+        }
     }
 
     private onConnect(connack: mqtt.IConnackPacket): void {
