@@ -15,7 +15,7 @@ interface DeviceStatus {
 type Callback = () => void;
 
 
-class Device {
+export class Device {
 
     private joined: boolean;
     private alpha: number;
