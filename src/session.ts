@@ -28,12 +28,12 @@ export class SxmSession {
      * The Session is responsible for the communication with the MQTT broker.
      * 
      */
-    constructor() {
+    constructor(roomId?: string) {
         this.uuid = this.initDeviceId();
 
         this.brokerUrl = DEFAULT_BROKER_URL;
         this.brokerPort = DEFAULT_BROKER_PORT;
-        this.roomId = DEFAULT_ROOM_ID;
+        this.roomId = roomId != null ? roomId : DEFAULT_ROOM_ID;
 
         this.getParameterFromUrl();
 
@@ -130,6 +130,7 @@ export class SxmSession {
         console.log(`Set broker port -> ${port}`);
     }
 
+    // could be removed?
     private subscribeTopics() {
         this.client.subscribe(`/sxm/${this.roomId}/start`, (message) => this._onStart(message));
         this.client.subscribe(`/sxm/${this.roomId}/shutdown`, (message) => this._onShutdown(message));
