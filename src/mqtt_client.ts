@@ -124,7 +124,7 @@ export class MqttClient {
         this.onDisconnectedCallbacks.push(callback);
     }
 
-    private onConnect(connack: mqtt.IConnackPacket): void {
+    private onConnect(): void {
         console.log(`MQTT Client connected to ${this.clientOptions.host}:${this.clientOptions.port}`);
         this.triggerCallbacks(this.onConnectedCallbacks);
         this.isOpen = true;
