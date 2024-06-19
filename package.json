@@ -10,6 +10,12 @@
     "scape x mobile",
     "mobile"
   ],
+  "main": "dist/sxm-web.cjs.js",
+  "module": "dist/sxm-web.es.js",
+  "types": "dist/sxm-web.d.ts",
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/InteractiveScapeGmbH/sxm-web/issues"
