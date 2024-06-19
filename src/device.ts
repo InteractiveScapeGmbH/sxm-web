@@ -18,7 +18,6 @@ type Callback = () => void;
 export class Device {
 
     private joined: boolean;
-    private alpha: number;
     private beta: number;
     private gamma: number;
     private acceleration: DeviceMotionEventAcceleration | null | undefined;
@@ -34,7 +33,6 @@ export class Device {
     constructor(deviceId: string) {
 
         this.joined = false;
-        this.alpha = 0.0;
         this.beta = 0.0;
         this.gamma = 0.0;
 
@@ -151,10 +149,6 @@ export class Device {
     }
 
     private onOrientation(event: DeviceOrientationEvent): any {
-        if (event.alpha != null) {
-            this.alpha = event.alpha;
-        }
-
         if (event.beta != null) {
             this.beta = event.beta;
         }
