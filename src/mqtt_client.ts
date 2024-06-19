@@ -54,7 +54,7 @@ export class MqttClient {
             path: "/mqtt"
         };
         this.client = mqtt.connect(this.clientOptions);
-        this.client.on("connect", (connack) => this.onConnect(connack));
+        this.client.on("connect", () => this.onConnect());
         this.client.on("message", (topic, message, packet) => this.onMessageArrived(topic, message, packet));
         this.client.on("disconnect", (response) => this.onDisconnect(response));
         this.client.connect();
