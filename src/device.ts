@@ -50,6 +50,9 @@ export class Device {
         this.init();
     }
 
+    public get isJoined(): boolean {
+        return this.joined;
+    }
 
     public get isMoving(): boolean {
         return this.currentMoving;
