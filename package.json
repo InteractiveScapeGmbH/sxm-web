@@ -1,6 +1,6 @@
 {
   "name": "@eqbic/sxm-web",
-  "private": true,
+  "private": false,
   "version": "0.1.0",
   "type": "module",
   "homepage": "https://github.com/InteractiveScapeGmbH/sxm-web",
