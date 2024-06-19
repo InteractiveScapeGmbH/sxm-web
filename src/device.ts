@@ -50,6 +50,7 @@ export class Device {
         this.init();
     }
 
+
     public get isMoving(): boolean {
         return this.currentMoving;
     }
