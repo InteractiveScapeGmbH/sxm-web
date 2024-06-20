@@ -11,7 +11,7 @@ type Callback = (message: string | Buffer) => void;
 
 export class SxmSession {
     private uuid: string | null;
-    private device: Device;
+    private _device: Device;
     private client: MqttClient;
     private _brokerUrl: string = "";
     private _brokerPort: number = -1;
@@ -37,8 +37,8 @@ export class SxmSession {
 
         this.getParameterFromUrl();
 
-        this.device = new Device(this.uuid);
-        this.device.registerOnMotionChanged(() => this.sendStatus());
+        this._device = new Device(this.uuid);
+        this._device.registerOnMotionChanged(() => this.sendStatus());
 
         this.client = new MqttClient(this.brokerUrl, this.brokerPort, this.uuid + "_capore");
 
@@ -92,6 +92,10 @@ export class SxmSession {
     */
     public set onUp(callback: Callback) {
         this.upCallback = callback;
+    }
+
+    public get device(): Device {
+        return this._device;
     }
 
     /**
@@ -199,7 +203,7 @@ export class SxmSession {
     }
 
     private sendStatus(): void {
-        const status = this.device.getStatus;
+        const status = this._device.getStatus;
         this.client.send(`sxm/${this.roomId}/box`, status, QoS.One, false);
     }
 }
