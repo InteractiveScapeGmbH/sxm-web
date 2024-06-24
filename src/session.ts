@@ -10,7 +10,7 @@ const DEFAULT_ROOM_ID: string = "room_uuid";
 type Callback = (message: string | Buffer) => void;
 
 export class SxmSession {
-    private uuid: string | null;
+    private uuid: string;
     private _device: Device;
     private client: MqttClient;
     private _brokerUrl: string = "";
