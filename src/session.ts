@@ -11,7 +11,7 @@ type Callback = (message: string | Buffer) => void;
 
 export class SxmSession {
     private uuid: string;
-    private _device: Device;
+    private _device: Device | undefined;
     private client: MqttClient;
     private _brokerUrl: string = "";
     private _brokerPort: number = -1;
@@ -37,9 +37,6 @@ export class SxmSession {
 
         this.getParameterFromUrl();
 
-        this._device = new Device(this.uuid);
-        this._device.registerOnMotionChanged(() => this.sendStatus());
-
         this.client = new MqttClient(this.brokerUrl, this.brokerPort, this.uuid + "_capore");
 
         this.startCallback = null;
@@ -53,10 +50,12 @@ export class SxmSession {
      * 
      * Starts the communication with the MQTT broker.
      * 
-     * @param interval - The interval in ms in which a message is sent to the server. (Default: 200ms)
+     * @param heartbeatInterval - The interval in ms in which a message is sent to the server. (Default: 200ms)
      */
-    public start(interval: number = 200) {
-        this.statusIntervalId = window.setInterval(() => this.sendStatus(), interval);
+    public start(heartbeatInterval: number = 200) {
+        this._device = new Device(this.uuid);
+        this._device.registerOnMotionChanged(() => this.sendStatus());
+        this.statusIntervalId = window.setInterval(() => this.sendStatus(), heartbeatInterval);
     }
 
     /**
@@ -94,7 +93,7 @@ export class SxmSession {
         this.upCallback = callback;
     }
 
-    public get device(): Device {
+    public get device(): Device | undefined {
         return this._device;
     }
 
@@ -203,7 +202,9 @@ export class SxmSession {
     }
 
     private sendStatus(): void {
-        const status = this._device.getStatus;
-        this.client.send(`sxm/${this.roomId}/box`, status, QoS.One, false);
+        if (this.device !== undefined) {
+            const status = this.device.getStatus;
+            this.client.send(`sxm/${this.roomId}/box`, status, QoS.One, false);
+        }
     }
 }
