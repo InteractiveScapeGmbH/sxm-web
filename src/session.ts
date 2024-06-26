@@ -98,6 +98,13 @@ export class SxmSession {
     }
 
     /**
+     * Return the unique id of the device.
+     */
+    public get deviceId(): string {
+        return this.uuid;
+    }
+
+    /**
      * Returns the roomId of the touch table the session is trying to communicate with.
      */
     public get roomId(): string {
