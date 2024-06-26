@@ -1,7 +1,7 @@
 {
   "name": "@eqbic/sxm-web",
   "private": false,
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
   "homepage": "https://github.com/InteractiveScapeGmbH/sxm-web",
   "description": "This package provides the functionality to establish the communication between a web app and an Interactive Scape touch table with Scape X Mobile.",
